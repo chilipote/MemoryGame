@@ -1,0 +1,91 @@
+<!DOCTYPE>
+<html lang="en">
+	<head>
+		<title>Chilipote's Memory Game</title>
+
+		<!-- LESS -->
+		<link rel="stylesheet/less" type="text/css" href="./assets/less/reset.less">
+		<link rel="stylesheet/less" type="text/css" href="./assets/less/bootstrap.less">
+		<link rel="stylesheet/less" type="text/css" href="./assets/less/bootstrap-responsive.less">
+		<link rel="stylesheet/less" type="text/css" href="./assets/less/design.less">
+		
+		<!-- SCRIPT -->
+
+		<script type="text/javascript" src="./assets/js/less.js"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8">
+
+
+	</head>
+	<body>
+
+		<div id="game" class="container-fluid">
+		  <div class="row-fluid">
+
+		  </div>
+		  <footer>
+				<p>Allan Bettarel © | 2013</p>
+			</footer>
+		</div>
+
+
+
+
+
+		<div class="modal hide fade" id="level">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		  </div>
+		  <div class="modal-body">
+		  	<form>
+		  		<fieldset>
+		  			<legend>
+		  			Choisissez votre difficulté
+		  			</legend>
+				  	<label class="radio">
+				      <input type="radio" name="levelValue" id="1" value="1"> 
+				      Facile
+				    </label>
+				  	<label class="radio" >
+				      <input type="radio" name="levelValue" id="2" value="2"> 
+				      Moyen
+				    </label>
+				  	<label class="radio" >
+				      <input type="radio" name="levelValue" id="3" value="3"> 
+				      Difficile
+				    </label>
+		    	</fieldset>
+		  	</form>
+		  </div>
+		  <div class="modal-error">
+
+
+		  </div>
+		  <div class="modal-footer">
+		    <a href="#" class="btn btn-primary level-valid">Save changes</a>
+		  </div>
+		</div>
+
+
+
+		<script type="text/javascript" src="./assets/js/jquery.js"></script>
+		<script type="text/javascript" src="./assets/js/bootstrap.js"></script>
+		<script type="text/javascript">
+			 $(document).ready(function(){
+			 		$("#level").modal('show');
+			 		$(".level-valid").click(function(){
+			 			var levelValue = $('input[name=levelValue]:checked').val();
+			 			console.log(levelValue);
+			 			if(levelValue == undefined) {
+			 				$(".modal-error").toggleClass("alert-error");
+			 				$(".modal-error").html("Choisissez d'abord un niveau de difficulté");
+			 			}
+
+			 			
+			 			
+			 		});
+			 });
+		</script>
+	</body>
+</html>
