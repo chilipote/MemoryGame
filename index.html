@@ -94,6 +94,31 @@
 			// LE SPAN QUI SERA UTILISE (span1,span2...,span12)
 			var _spanItem = 12 / _nbItemOnLine;
 
+			// SET DE QUESTION POUR LE JEU
+			var _setOfMemory = 
+			[
+	 				{"id":"1", "question":"<html></html>"},
+					{"id":"2", "question":"<span></span>"},
+					{"id":"3", "question":"<div></div>"},
+					{"id":"4", "question":"<row></row>"},
+					{"id":"5", "question":"<span2></span2>"},
+					{"id":"6", "question":"<li></li>"},
+					{"id":"7", "question":"<img />"},
+					{"id":"8", "question":"<ol></ol>"},
+					{"id":"9", "question":"<ul></ul>"},
+					{"id":"10", "question":"<el></el>"},
+					{"id":"11", "question":"<section></section>"},
+					{"id":"12", "question":"<nichon></nichon>"},
+					{"id":"13", "question":"jquery"},
+					{"id":"14", "question":"jquery-ui"},
+					{"id":"15", "question":"<meta>"},
+					{"id":"16", "question":"<form></form>"},
+					{"id":"17", "question":"#id"},
+					{"id":"18", "question":"<footer></footer>"},
+					{"id":"19", "question":"<header></header>"},
+					{"id":"20", "question":".class"}
+	 		];
+
 
 			var showModal = function() {
 				$("#levelModal").modal('show');
@@ -109,6 +134,10 @@
 			var displayError = function() {
 				$(".modal-error").addClass("alert-error");
 	 			$(".modal-error").html("<p>Choisissez d'abord un niveau de difficulté</p>");
+			}
+
+			var setOfMemoryForGame = function(setOfMemory) {
+
 			}
 
 
@@ -128,41 +157,37 @@
 	 					return false;
 	 				}
 
-	 				var nbOfPair = nbOfRow * _nbItemOnLine / 2;
+	 				
 
-	 				var questionItem = 
-	 				[
-		 				{"id":"1", "question":"<html></html>"},
-						{"id":"2", "question":"<html></html>"},
-						{"id":"3", "question":"<html></html>"},
-						{"id":"4", "question":"<html></html>"},
-						{"id":"5", "question":"<html></html>"},
-						{"id":"6", "question":"<html></html>"},
-						{"id":"7", "question":"<html></html>"},
-						{"id":"8", "question":"<html></html>"},
-						{"id":"9", "question":"<html></html>"},
-						{"id":"10", "question":"<html></html>"},
-						{"id":"11", "question":"<html></html>"},
-						{"id":"12", "question":"<html></html>"},
-						{"id":"13", "question":"<html></html>"},
-						{"id":"14", "question":"<html></html>"},
-						{"id":"15", "question":"<html></html>"},
-						{"id":"16", "question":"<html></html>"},
-						{"id":"17", "question":"<html></html>"},
-						{"id":"18", "question":"<html></html>"},
-						{"id":"19", "question":"<html></html>"},
-						{"id":"20", "question":"<html></html>"}
-	 				];
+	 				var nbPairMemoryItem = nbOfRow * _nbItemOnLine / 2;
 
-	 				var questionItemOrderRandow = questionItem.sort(function() { return 0.5 - Math.random();});
+	 				var setOfMemoryRandom = _setOfMemory.sort(function() { return 0.5 - Math.random();});
+	 				var setOfMemoryForGame = setOfMemoryRandom.splice(0,	nbPairMemoryItem);
 
-	 				console.log(questionItemOrderRandow);
+	 				var array1 = setOfMemoryForGame;
+	 				array1.sort(function() { return 0.5 - Math.random();});
+	 				var array2 = setOfMemoryForGame;
 
+
+	 				var setOfMemoryReadyToUse = $.merge(array1, array2);
+	 				
+
+	 				console.debug("SET DE JEU INITIALIZE"+setOfMemoryForGame);
+	 				console.debug("TABLEAU FINAL"+setOfMemoryReadyToUse);
+
+		 			var z = 0;
 		 			for (var i = nbOfRow; i > 0; i--) {
+
 		 				$("#game").prepend("<div id="+i+" class=\"row-fluid\"></div>");
-		 				console.log(Math.floor(Math.random()*38));
+
+
+		 				
 		 				for (var j = _nbItemOnLine; j > 0; j--) {
-		 					$("#"+i).append("<div class=\"item span"+_spanItem+"\"></div>");
+		 					var item = setOfMemoryReadyToUse[z];
+		 					$("#"+i).append("<div id="+item["id"]+" class=\"item span"+_spanItem+"\"></div>");
+		 					++z;
+		 					
+
 		 				};
 		 			};
 
