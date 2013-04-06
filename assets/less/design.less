@@ -1,22 +1,44 @@
-#game {
-	height:100%;
+div.container-fluid {
+		margin-top:30px;
+		clear:both;
+	#sidebar {
+		.score {
+			margin-bottom: 30px;
+		}
+		
+		.replay {
 
-	.row-fluid {
-		height:100%;
-   	width: 100%;
+		}
+
+	}
+	#game {
+
+
+		.row-fluid {
+			height:100px;
+
+			.item {
+				margin:0 2px 2px 0;
+				height:100%;
+				background-color:	#000;
+			}
+		}
 	}
 
-	footer {
-	height:20px;
-	text-align:center;
-	}
-
+	
 }
 
-#level {
-  display: inline-block;
-  vertical-align: middle;
-		
+footer {
+	height:20px;
+	p {
+		text-align: center;
+	}
+}
+
+#levelModal {
+	  display: inline-block;
+	  vertical-align: middle;
+			
 		h1 {
 			font-size : 20px;
 		}	
@@ -27,10 +49,7 @@
 		}
 		.modal-error {
 			height:30px;
-			padding:7px;	
-
+			line-height: 30px;
+			text-align: center;
 		}
-
-}
-
-
+	}

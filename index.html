@@ -20,20 +20,36 @@
 	</head>
 	<body>
 
-		<div id="game" class="container-fluid">
-		  <div class="row-fluid">
 
-		  </div>
-		  <footer>
-				<p>Allan Bettarel © | 2013</p>
-			</footer>
+		<div class="container-fluid">
+			<div  class="row-fluid">
+				<div class="span2 well" id="sidebar">
+					<div class="row-fluid score">
+						<h4>SCORE :</h4>
+						<p id="score" ></p>
+					</div>
+					<div class="row-fluid replay">
+						<h4>REJOUER :</h4>
+
+					</div>
+				</div>
+
+				<div class="span10" id="game">
+
+				</div>
+			</div>
 		</div>
 
+		<footer>
+		 	<div class="row-fluid">
+				<p>Allan Bettarel © | 2013</p>
+		 	</div>
+		</footer>
 
 
 
 
-		<div class="modal hide fade" id="level">
+		<div class="modal hide fade" id="levelModal">
 		  <div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		  </div>
@@ -44,23 +60,21 @@
 		  			Choisissez votre difficulté
 		  			</legend>
 				  	<label class="radio">
-				      <input type="radio" name="levelValue" id="1" value="1"> 
+				      <input type="radio" name="nbOfRow" id="1" value="4"> 
 				      Facile
 				    </label>
 				  	<label class="radio" >
-				      <input type="radio" name="levelValue" id="2" value="2"> 
+				      <input type="radio" name="nbOfRow" id="2" value="6"> 
 				      Moyen
 				    </label>
 				  	<label class="radio" >
-				      <input type="radio" name="levelValue" id="3" value="3"> 
+				      <input type="radio" name="nbOfRow" id="3" value="8"> 
 				      Difficile
 				    </label>
 		    	</fieldset>
 		  	</form>
 		  </div>
-		  <div class="modal-error">
-
-
+		  <div class="modal-error">	
 		  </div>
 		  <div class="modal-footer">
 		    <a href="#" class="btn btn-primary level-valid">Save changes</a>
@@ -72,20 +86,77 @@
 		<script type="text/javascript" src="./assets/js/jquery.js"></script>
 		<script type="text/javascript" src="./assets/js/bootstrap.js"></script>
 		<script type="text/javascript">
-			 $(document).ready(function(){
-			 		$("#level").modal('show');
-			 		$(".level-valid").click(function(){
-			 			var levelValue = $('input[name=levelValue]:checked').val();
-			 			console.log(levelValue);
-			 			if(levelValue == undefined) {
-			 				$(".modal-error").toggleClass("alert-error");
-			 				$(".modal-error").html("Choisissez d'abord un niveau de difficulté");
-			 			}
 
-			 			
-			 			
-			 		});
-			 });
+			// NB ITEM SUR UNE LIGNE (valeur possible : 1,)
+			// LE LEVELVALUE DEFINIE LE NOMBRE DE ROW
+			var _nbItemOnLine = 6;
+
+			// LE SPAN QUI SERA UTILISE (span1,span2...,span12)
+			var _spanItem = 12 / _nbItemOnLine;
+
+
+			var showModal = function() {
+				$("#levelModal").modal('show');
+			}
+
+			var levelValueExist = function(nbOfRow) {
+				if(nbOfRow == undefined) {
+					return false;
+				}
+				return true;
+			}
+
+			var displayError = function() {
+				$(".modal-error").addClass("alert-error");
+	 			$(".modal-error").html("<p>Choisissez d'abord un niveau de difficulté</p>");
+			}
+
+
+
+		 $(document).ready(function(){
+		 		showModal();
+
+
+
+		 		
+		 		// CLICK ON VALID LEVEL
+		 		$(".level-valid").click(function(){
+		 			var nbOfRow = $('input[name=nbOfRow]:checked').val();
+		 		
+		 			if(!levelValueExist(nbOfRow)) {
+	 					displayError();
+	 					return false;
+	 				}
+
+	 				var nbOfPair = nbOfRow * _nbItemOnLine / 2;
+
+
+		 			for (var i = nbOfRow; i > 0; i--) {
+		 				$("#game").prepend("<div id="+i+" class=\"row-fluid\"></div>");
+		 				for (var j = _nbItemOnLine; j > 0; j--) {
+		 					$("#"+i).append("<div class=\"item span"+_spanItem+"\"></div>");
+		 				};
+		 			};
+
+		 			$("#levelModal").modal('hide');
+		 		});
+
+		 		
+
+
+		 		// CLOSE POP UP
+		 		$("#levelModal").on("hide",function(event){
+		 			var nbOfRow = $('input[name=nbOfRow]:checked').val();
+		 					 		
+		 			if(!levelValueExist(nbOfRow)) {
+	 					displayError();
+
+	 					// PAS DECOUPER EN FONCTION SINON LE RETURN FALSE N'EST PAS INTERPRETE
+	 					return false;
+	 				}
+		 		});
+
+		 	});
 		</script>
 	</body>
 </html>
