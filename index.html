@@ -130,9 +130,37 @@
 
 	 				var nbOfPair = nbOfRow * _nbItemOnLine / 2;
 
+	 				var questionItem = 
+	 				[
+		 				{"id":"1", "question":"<html></html>"},
+						{"id":"2", "question":"<html></html>"},
+						{"id":"3", "question":"<html></html>"},
+						{"id":"4", "question":"<html></html>"},
+						{"id":"5", "question":"<html></html>"},
+						{"id":"6", "question":"<html></html>"},
+						{"id":"7", "question":"<html></html>"},
+						{"id":"8", "question":"<html></html>"},
+						{"id":"9", "question":"<html></html>"},
+						{"id":"10", "question":"<html></html>"},
+						{"id":"11", "question":"<html></html>"},
+						{"id":"12", "question":"<html></html>"},
+						{"id":"13", "question":"<html></html>"},
+						{"id":"14", "question":"<html></html>"},
+						{"id":"15", "question":"<html></html>"},
+						{"id":"16", "question":"<html></html>"},
+						{"id":"17", "question":"<html></html>"},
+						{"id":"18", "question":"<html></html>"},
+						{"id":"19", "question":"<html></html>"},
+						{"id":"20", "question":"<html></html>"}
+	 				];
+
+	 				var questionItemOrderRandow = questionItem.sort(function() { return 0.5 - Math.random();});
+
+	 				console.log(questionItemOrderRandow);
 
 		 			for (var i = nbOfRow; i > 0; i--) {
 		 				$("#game").prepend("<div id="+i+" class=\"row-fluid\"></div>");
+		 				console.log(Math.floor(Math.random()*38));
 		 				for (var j = _nbItemOnLine; j > 0; j--) {
 		 					$("#"+i).append("<div class=\"item span"+_spanItem+"\"></div>");
 		 				};
