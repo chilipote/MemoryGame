@@ -87,7 +87,7 @@
 		<script type="text/javascript" src="./assets/js/bootstrap.js"></script>
 		<script type="text/javascript">
 
-			// NB ITEM SUR UNE LIGNE (valeur possible : 1,)
+			// NB ITEM SUR UNE LIGNE (valeur possible : 2, 3, 4, 6, 12)
 			// LE LEVELVALUE DEFINIE LE NOMBRE DE ROW
 			var _nbItemOnLine = 6;
 
@@ -95,9 +95,10 @@
 			var _spanItem = 12 / _nbItemOnLine;
 
 			// SET DE QUESTION POUR LE JEU
+
 			var _setOfMemory = 
 			[
-	 				{"id":"1", "question":"<html></html>"},
+					{"id":"1", "question":"<html></html>"},
 					{"id":"2", "question":"<span></span>"},
 					{"id":"3", "question":"<div></div>"},
 					{"id":"4", "question":"<row></row>"},
@@ -116,8 +117,18 @@
 					{"id":"17", "question":"#id"},
 					{"id":"18", "question":"<footer></footer>"},
 					{"id":"19", "question":"<header></header>"},
-					{"id":"20", "question":".class"}
-	 		];
+					{"id":"20", "question":"<article></article>"},
+					{"id":"21", "question":"We are autors"},
+					{"id":"22", "question":"<canvas></canvas>"},
+					{"id":"23", "question":"javascript"},
+					{"id":"24", "question":"WTF"},
+					{"id":"25", "question":"Screw you, i'm goin home"},
+					{"id":"26", "question":"less"},
+					{"id":"27", "question":"Foo/bar"},
+					{"id":"28", "question":"gruntJS"},
+					{"id":"29", "question":"SASS"},
+					{"id":"30", "question":"THE answer is 42"}	
+				];
 
 
 			var showModal = function() {
@@ -136,18 +147,15 @@
 	 			$(".modal-error").html("<p>Choisissez d'abord un niveau de difficulté</p>");
 			}
 
-			var setOfMemoryForGame = function(setOfMemory) {
-
+			function sortRandom() {
+				return 0.5 - Math.random(); 
 			}
-
 
 
 		 $(document).ready(function(){
 		 		showModal();
 
 
-
-		 		
 		 		// CLICK ON VALID LEVEL
 		 		$(".level-valid").click(function(){
 		 			var nbOfRow = $('input[name=nbOfRow]:checked').val();
@@ -158,37 +166,37 @@
 	 				}
 
 	 				
-
 	 				var nbPairMemoryItem = nbOfRow * _nbItemOnLine / 2;
 
-	 				var setOfMemoryRandom = _setOfMemory.sort(function() { return 0.5 - Math.random();});
-	 				var setOfMemoryForGame = setOfMemoryRandom.splice(0,	nbPairMemoryItem);
+	 				var array = new Array();
+	 				var array1 = new Array();
+					var array2 = new Array();
 
-	 				var array1 = setOfMemoryForGame;
-	 				array1.sort(function() { return 0.5 - Math.random();});
-	 				var array2 = setOfMemoryForGame;
+	 				array = _setOfMemory.sort(function() { return 0.5 - Math.random()  + 1 });
 
+	 				var setOfMemoryForGame = array.splice(0,nbPairMemoryItem);
 
-	 				var setOfMemoryReadyToUse = $.merge(array1, array2);
-	 				
+					for (var a = setOfMemoryForGame.length; a > 0; a-- ) {
+						array1.push(setOfMemoryForGame[a-1]);
+						array2.push(setOfMemoryForGame[a-1]);
+					}	 				
+					array2.sort(function() { return 0.5 - Math.random()  + 1 });
 
-	 				console.debug("SET DE JEU INITIALIZE"+setOfMemoryForGame);
-	 				console.debug("TABLEAU FINAL"+setOfMemoryReadyToUse);
+	 				var setOfMemoryReadyToUse = array1.concat(array2);
 
 		 			var z = 0;
+
 		 			for (var i = nbOfRow; i > 0; i--) {
 
 		 				$("#game").prepend("<div id="+i+" class=\"row-fluid\"></div>");
 
-
-		 				
 		 				for (var j = _nbItemOnLine; j > 0; j--) {
-		 					var item = setOfMemoryReadyToUse[z];
-		 					$("#"+i).append("<div id="+item["id"]+" class=\"item span"+_spanItem+"\"></div>");
-		 					++z;
-		 					
 
+		 					$("#"+i).append("<div id="+setOfMemoryReadyToUse[z]["id"]+" class=\"item span"+_spanItem+"\"></div>");
+		 					z++;
+		 					
 		 				};
+		 				console.log(z);
 		 			};
 
 		 			$("#levelModal").modal('hide');
@@ -198,7 +206,7 @@
 
 
 		 		// CLOSE POP UP
-		 		$("#levelModal").on("hide",function(event){
+		 		$("#levelModal").on("hide",function(event) {
 		 			var nbOfRow = $('input[name=nbOfRow]:checked').val();
 		 					 		
 		 			if(!levelValueExist(nbOfRow)) {
@@ -208,7 +216,6 @@
 	 					return false;
 	 				}
 		 		});
-
 		 	});
 		</script>
 	</body>
