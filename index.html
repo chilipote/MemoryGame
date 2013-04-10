@@ -26,7 +26,7 @@
 				<div class="span2 well" id="sidebar">
 					<div class="row-fluid score">
 						<h4>SCORE :</h4>
-						<p id="score" ></p>
+						<p id="score" >0</p>
 					</div>
 					<div class="row-fluid replay">
 						<h4>REJOUER :</h4>
@@ -85,104 +85,48 @@
 
 		<script type="text/javascript" src="./assets/js/jquery.js"></script>
 		<script type="text/javascript" src="./assets/js/bootstrap.js"></script>
+		<script type="text/javascript" src="./assets/js/questions.js"></script>
+		<script type="text/javascript" src="./assets/js/config.js"></script>
+		<script type="text/javascript" src="./assets/js/functions.js"></script>
 		<script type="text/javascript">
 
-			// NB ITEM SUR UNE LIGNE (valeur possible : 2, 3, 4, 6, 12)
-			// LE LEVELVALUE DEFINIE LE NOMBRE DE ROW
-			var _nbItemOnLine = 6;
+		var score = 0;
+		var nbClick = 0;
+		var FirstOfPairId;
+		var SecondOfPairId;
 
-			// LE SPAN QUI SERA UTILISE (span1,span2...,span12)
-			var _spanItem = 12 / _nbItemOnLine;
+		var gamerAnswers = [];
 
-			// SET DE QUESTION POUR LE JEU
-
-			var _setOfMemory = 
-			[
-					{"id":"1", "question":"<html></html>"},
-					{"id":"2", "question":"<span></span>"},
-					{"id":"3", "question":"<div></div>"},
-					{"id":"4", "question":"<row></row>"},
-					{"id":"5", "question":"<span2></span2>"},
-					{"id":"6", "question":"<li></li>"},
-					{"id":"7", "question":"<img />"},
-					{"id":"8", "question":"<ol></ol>"},
-					{"id":"9", "question":"<ul></ul>"},
-					{"id":"10", "question":"<el></el>"},
-					{"id":"11", "question":"<section></section>"},
-					{"id":"12", "question":"<nichon></nichon>"},
-					{"id":"13", "question":"jquery"},
-					{"id":"14", "question":"jquery-ui"},
-					{"id":"15", "question":"<meta>"},
-					{"id":"16", "question":"<form></form>"},
-					{"id":"17", "question":"#id"},
-					{"id":"18", "question":"<footer></footer>"},
-					{"id":"19", "question":"<header></header>"},
-					{"id":"20", "question":"<article></article>"},
-					{"id":"21", "question":"We are autors"},
-					{"id":"22", "question":"<canvas></canvas>"},
-					{"id":"23", "question":"javascript"},
-					{"id":"24", "question":"WTF"},
-					{"id":"25", "question":"Screw you, i'm goin home"},
-					{"id":"26", "question":"less"},
-					{"id":"27", "question":"Foo/bar"},
-					{"id":"28", "question":"gruntJS"},
-					{"id":"29", "question":"SASS"},
-					{"id":"30", "question":"THE answer is 42"}	
-				];
-
-
-			var showModal = function() {
-				$("#levelModal").modal('show');
-			}
-
-			var levelValueExist = function(nbOfRow) {
-				if(nbOfRow == undefined) {
-					return false;
-				}
-				return true;
-			}
-
-			var displayError = function() {
-				$(".modal-error").addClass("alert-error");
-	 			$(".modal-error").html("<p>Choisissez d'abord un niveau de difficulté</p>");
-			}
-
-			function sortRandom() {
-				return 0.5 - Math.random(); 
-			}
-
-
-		 $(document).ready(function(){
+		 $(document).ready(function() {
 		 		showModal();
-
 
 		 		// CLICK ON VALID LEVEL
 		 		$(".level-valid").click(function(){
 		 			var nbOfRow = $('input[name=nbOfRow]:checked').val();
 		 		
 		 			if(!levelValueExist(nbOfRow)) {
-	 					displayError();
-	 					return false;
-	 				}
+							displayError();
+							return false;
+						}
 
-	 				
-	 				var nbPairMemoryItem = nbOfRow * _nbItemOnLine / 2;
+						
+						var nbPairMemoryItem = nbOfRow * _nbItemOnLine / 2;
 
-	 				var array = new Array();
-	 				var array1 = new Array();
+
+						var array1 = new Array();
 					var array2 = new Array();
 
-	 				array = _setOfMemory.sort(function() { return 0.5 - Math.random()  + 1 });
+						_setOfMemory.sort(function() { return 0.5 - Math.random() });
 
-	 				var setOfMemoryForGame = array.splice(0,nbPairMemoryItem);
+						var setOfMemoryForGame = _setOfMemory.splice(0,nbPairMemoryItem);
 
 					for (var a = setOfMemoryForGame.length; a > 0; a-- ) {
 						array1.push(setOfMemoryForGame[a-1]);
 						array2.push(setOfMemoryForGame[a-1]);
 					}	 				
-					array2.sort(function() { return 0.5 - Math.random()  + 1 });
+					array2.sort(function() { return 0.5 - Math.random() });
 
-	 				var setOfMemoryReadyToUse = array1.concat(array2);
+						var setOfMemoryReadyToUse = array1.concat(array2);
 
 		 			var z = 0;
 
@@ -191,8 +135,8 @@
 		 				$("#game").prepend("<div id="+i+" class=\"row-fluid\"></div>");
 
 		 				for (var j = _nbItemOnLine; j > 0; j--) {
-
-		 					$("#"+i).append("<div id="+setOfMemoryReadyToUse[z]["id"]+" class=\"item span"+_spanItem+"\"></div>");
+		 					setOfMemoryReadyToUse[z]["question"].toString();
+		 					$("#"+i).append("<div data-answer="+setOfMemoryReadyToUse[z]["id"]+" class=\"item itemToClick item"+setOfMemoryReadyToUse[z]["id"]+" span"+_spanItem+"\"><div class=\"answer\"><p>#"+setOfMemoryReadyToUse[z]["question"].toString()+"</p></div></div>");
 		 					z++;
 		 					
 		 				};
@@ -202,20 +146,59 @@
 		 			$("#levelModal").modal('hide');
 		 		});
 
-		 		
-
-
 		 		// CLOSE POP UP
 		 		$("#levelModal").on("hide",function(event) {
 		 			var nbOfRow = $('input[name=nbOfRow]:checked').val();
 		 					 		
 		 			if(!levelValueExist(nbOfRow)) {
-	 					displayError();
+							displayError();
 
-	 					// PAS DECOUPER EN FONCTION SINON LE RETURN FALSE N'EST PAS INTERPRETE
-	 					return false;
-	 				}
+							// PAS DECOUPER EN FONCTION SINON LE RETURN FALSE N'EST PAS INTERPRETE
+							return false;
+						}
 		 		});
+		 	});
+
+			$(document).on("click",".itemToClick", function() {
+				el = $(".item"+FirstOfPairId);
+				
+				if (nbClick == 0 ) {
+					FirstOfPairId = $(this).data("answer");
+					
+					el.childre().removeClass('itemToClick');					
+					$(this).children().addClass('answer-active');
+					
+					nbClick++;
+					return false;
+				}
+
+				if (nbClick == 1) {
+
+					SecondOfPairId = $(this).data("answer");
+
+					if(FirstOfPairId == SecondOfPairId) {
+						
+						
+						score++;
+						updateScoreCountView(score);
+						
+						el.children().removeClass('answer-active');
+						el.removeClass('itemToClick');
+						el.fadeOut('slow', function() {
+							el.addClass('item-found');
+						});
+						
+						scleanVariable();
+					}else{
+						el.childre().addClass('itemToClick');
+						el.children().removeClass('answer-active');
+					
+						cleanVariable();
+					}
+				}
+
+		 		// $(this).children().toggleClass;
+
 		 	});
 		</script>
 	</body>
