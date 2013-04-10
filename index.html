@@ -174,27 +174,24 @@
 					$(this).children().addClass('active');
 					SecondOfPair = $(this);
 
+
+
 					if((FirstOfPair.data('id') != SecondOfPair.data('id')) && (FirstOfPair.data('answer') == SecondOfPair.data('answer'))) {
 						
-						console.log(FirstOfPair.data('id'));
-						console.log(SecondOfPair.data('id'));
-						console.log(FirstOfPair.data('answer'));
-						console.log(SecondOfPair.data('answer'));
-
 						score++;
 						updateScoreCountView(score);
 
-						FirstOfPair.children().removeClass('active');
-						FirstOfPair.fadeOut('slow', function() {
-							FirstOfPair.addClass('item-found');
+						window.setTimeout(removeTheClass , 1000);
+						
+						$(".item"+FirstOfPair.data('answer')).fadeOut('slow', function() {
+							$(".item"+FirstOfPair.data('answer')).addClass('item-found');
 						});
 						
 						cleanVariable();
-						console.log("count"+nbClick);
-					}else{
-						FirstOfPair.children().removeClass('active');
-						$(this).children().removeClass('active');
 
+					} else {
+
+						window.setTimeout(removeTheClass , 1000);
 						cleanVariable();
 						console.log("count"+nbClick);
 

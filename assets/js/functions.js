@@ -22,3 +22,9 @@ function cleanVariable () {
 function updateScoreCountView(score) {
 	$("#score").html(score);
 }
+
+function removeTheClass() {
+	FirstOfPair.children().removeClass('active');
+	SecondOfPair.children().removeClass('active');
+}
+
