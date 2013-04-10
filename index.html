@@ -92,8 +92,8 @@
 
 		var score = 0;
 		var nbClick = 0;
-		var FirstOfPairId;
-		var SecondOfPairId;
+		var FirstOfPair;
+		var SecondOfPair;
 
 		var gamerAnswers = [];
 
@@ -136,7 +136,7 @@
 
 		 				for (var j = _nbItemOnLine; j > 0; j--) {
 		 					setOfMemoryReadyToUse[z]["question"].toString();
-		 					$("#"+i).append("<div data-answer="+setOfMemoryReadyToUse[z]["id"]+" class=\"item itemToClick item"+setOfMemoryReadyToUse[z]["id"]+" span"+_spanItem+"\"><div class=\"answer\"><p>#"+setOfMemoryReadyToUse[z]["question"].toString()+"</p></div></div>");
+		 					$("#"+i).append("<div data-id="+z+" data-answer="+setOfMemoryReadyToUse[z]["id"]+" class=\"item item"+setOfMemoryReadyToUse[z]["id"]+" span"+_spanItem+"\"><div class=\"answer\"><p>#"+setOfMemoryReadyToUse[z]["question"].toString()+"</p></div></div>");
 		 					z++;
 		 					
 		 				};
@@ -159,41 +159,45 @@
 		 		});
 		 	});
 
-			$(document).on("click",".itemToClick", function() {
-				el = $(".item"+FirstOfPairId);
-				
+			$(document).on("click",".item", function() {
+
 				if (nbClick == 0 ) {
-					FirstOfPairId = $(this).data("answer");
 					
-					el.childre().removeClass('itemToClick');					
-					$(this).children().addClass('answer-active');
+					FirstOfPair = $(this);
+					FirstOfPair.children().addClass('active');
 					
 					nbClick++;
 					return false;
 				}
 
 				if (nbClick == 1) {
+					$(this).children().addClass('active');
+					SecondOfPair = $(this);
 
-					SecondOfPairId = $(this).data("answer");
+					if((FirstOfPair.data('id') != SecondOfPair.data('id')) && (FirstOfPair.data('answer') == SecondOfPair.data('answer'))) {
+						
+						console.log(FirstOfPair.data('id'));
+						console.log(SecondOfPair.data('id'));
+						console.log(FirstOfPair.data('answer'));
+						console.log(SecondOfPair.data('answer'));
 
-					if(FirstOfPairId == SecondOfPairId) {
-						
-						
 						score++;
 						updateScoreCountView(score);
-						
-						el.children().removeClass('answer-active');
-						el.removeClass('itemToClick');
-						el.fadeOut('slow', function() {
-							el.addClass('item-found');
+
+						FirstOfPair.children().removeClass('active');
+						FirstOfPair.fadeOut('slow', function() {
+							FirstOfPair.addClass('item-found');
 						});
 						
-						scleanVariable();
-					}else{
-						el.childre().addClass('itemToClick');
-						el.children().removeClass('answer-active');
-					
 						cleanVariable();
+						console.log("count"+nbClick);
+					}else{
+						FirstOfPair.children().removeClass('active');
+						$(this).children().removeClass('active');
+
+						cleanVariable();
+						console.log("count"+nbClick);
+
 					}
 				}
 
