@@ -15,19 +15,10 @@ function displayError() {
 }
 
 function cleanVariable () {
-	delete itemChoose1, itemChoose2;
+	delete FirstOfPair, SecondOfPair;
 	nbClick = 0;
 }
 
 function updateScoreCountView(score) {
 	$("#score").html(score);
 }
-
-function enableClick (class) {
-	$(".item"+itemChoose).addClass(class);
-}
-
-function disableClick (class) {
-	$(".item"+itemChoose).removeClass(class);
-}
-
