@@ -66,9 +66,10 @@ function main() {
 		}
 
 		var nbPairMemoryItem = nbOfRow * _nbItemOnLine / 2;
-		showNbOfPairs(nbPairMemoryItem);
 		var array1 = new Array();
 		var array2 = new Array();
+		
+		showNbOfPairs(nbPairMemoryItem);
 
 		_setOfMemory.sort(function() { return 0.5 - Math.random() });
 
@@ -107,7 +108,7 @@ $(document).on("click",".item", function() {
 	if (nbClick == 0 ) {
 		
 		FirstOfPair = $(this);
-		FirstOfPair.children().show('slow');
+		FirstOfPair.children().slideToggle('slow');
 		
 		nbClick++;
 		return false;
@@ -116,7 +117,7 @@ $(document).on("click",".item", function() {
 		if (nbClick == 1) {
 			attempt++;
 			updateAttemptCountView(attempt);
-			$(this).children().show('slow');
+			$(this).children().slideToggle('slow');
 			
 			SecondOfPair = $(this);
 
