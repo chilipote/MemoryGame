@@ -50,12 +50,10 @@ function removeTheClass() {
 }
 
 
-
 function main() {
 	
 	showModal();	
 
-// CLICK ON VALID LEVEL
 	$(".level-valid").click(function(){
 
 		nbOfRow = $('input[name=nbOfRow]:checked').val();
